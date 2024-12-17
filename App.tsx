@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -41,6 +42,12 @@ export default function App(): React.JSX.Element {
     initialData();
   }, []);
 
+  const handleRestartApp = () => {
+    if (Platform.OS === 'android') {
+      Restart.restart('test');
+    }
+  };
+
   if (!randomUser) {
     return (
       <View style={styles.container}>
@@ -53,9 +60,7 @@ export default function App(): React.JSX.Element {
     <View style={styles.container}>
       <Text>{JSON.stringify(randomUser)}</Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => Restart.restart('test')}>
+      <TouchableOpacity style={styles.button} onPress={handleRestartApp}>
         <Text style={styles.textButton}>reload</Text>
       </TouchableOpacity>
     </View>
